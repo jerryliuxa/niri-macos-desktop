@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Optional experimental Dock launcher. Walker/Elephant do not depend on this.
+if ! command -v nwg-dock >/dev/null 2>&1; then
+  echo "nwg-dock is not installed. Install it separately to experiment with a Dock." >&2
+  exit 127
+fi
+
+# CLI options vary by nwg-dock build; check nwg-dock --help first.
+# Keep this conservative rather than assuming animation or auto-hide flags.
+exec nwg-dock -i 48 --mb 10
