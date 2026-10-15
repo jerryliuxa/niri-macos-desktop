@@ -1,0 +1,15 @@
+// Snippets for ~/.config/niri/config.kdl
+// This is NOT a complete Niri config. Merge lines into the matching section.
+
+// Add inside your existing binds { ... } block:
+Mod+Space { spawn "walker"; }
+
+// Optional startup entry at top level if Waybar is not already launched:
+// spawn-at-startup "waybar"
+
+// Enable Elephant through its service integration instead of duplicating a process:
+//   elephant service enable
+//   systemctl --user enable --now elephant.service
+
+// After editing, validate with:
+//   niri validate
