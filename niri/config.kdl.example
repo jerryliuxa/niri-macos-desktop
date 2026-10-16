@@ -4,6 +4,11 @@
 // Add inside your existing binds { ... } block:
 Mod+Space { spawn "walker"; }
 
+// Optional dedicated clipboard-history shortcut.
+// Open Walker, then type ":" followed by a search term.
+// Requires the optional elephant-clipboard provider.
+Mod+V { spawn "walker"; }
+
 // Optional startup entry at top level if Waybar is not already launched:
 // spawn-at-startup "waybar"
 
