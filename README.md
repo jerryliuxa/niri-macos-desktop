@@ -12,6 +12,7 @@ macOS Sonoma / Sequoia-inspired desktop setup for **Arch Linux + Niri**. This st
 - Optional Elephant providers for desktop apps, calculator, file search, command runner, web search, and clipboard history.
 - Installer backs up existing Waybar files instead of silently replacing them.
 - Optional Dock starter script and documented Niri limitations.
+- Optional guide for Chinese input (Fcitx5/Pinyin), CJK fonts, and Chinese locale.
 
 ## Repository layout
 
@@ -21,7 +22,7 @@ macOS Sonoma / Sequoia-inspired desktop setup for **Arch Linux + Niri**. This st
 - walker/ — Walker setup and theme notes.
 - elephant/ — provider and service setup notes.
 - scripts/start-dock — optional nwg-dock launcher.
-- docs/ — setup and compatibility notes.
+- docs/ — setup and compatibility notes, including [Chinese input and locale setup](docs/ime-chinese.md).
 
 ## Install
 
@@ -103,6 +104,10 @@ waybar -c "$HOME/.config/waybar/config.jsonc" -s "$HOME/.config/waybar/style.css
 ~~~
 
 For automatic startup, add spawn-at-startup "waybar" at the top level of your Niri config if Waybar is not already started by your session/autostart setup.
+
+## Chinese input and UI
+
+Chinese input, font coverage, and the desktop locale are separate settings. Follow [docs/ime-chinese.md](docs/ime-chinese.md) to install Fcitx5/Pinyin, set environment variables, start the input method from Niri, enable CJK fonts, and optionally switch the locale to Simplified Chinese. This guide is optional and is not run by `install.sh`.
 
 ## Walker usage
 
