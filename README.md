@@ -12,7 +12,7 @@ macOS Sonoma / Sequoia-inspired desktop setup for **Arch Linux + Niri**. This st
 - Optional Elephant providers for desktop apps, calculator, file search, command runner, web search, and clipboard history.
 - Installer backs up existing Waybar files instead of silently replacing them.
 - Optional Dock starter script and documented Niri limitations.
-- Optional guide for Chinese input (Fcitx5/Pinyin), CJK fonts, and Chinese locale.
+- Optional guides for Chinese input (Fcitx5/Pinyin), CJK fonts, Chinese locale, and clipboard history.
 
 ## Repository layout
 
@@ -22,7 +22,7 @@ macOS Sonoma / Sequoia-inspired desktop setup for **Arch Linux + Niri**. This st
 - walker/ — Walker setup and theme notes.
 - elephant/ — provider and service setup notes.
 - scripts/start-dock — optional nwg-dock launcher.
-- docs/ — setup and compatibility notes, including [Chinese input and locale setup](docs/ime-chinese.md).
+- docs/ — setup and compatibility notes, including [Chinese input and locale setup](docs/ime-chinese.md) and [clipboard history setup](docs/clipboard-history.md).
 
 ## Install
 
@@ -37,7 +37,7 @@ cd niri-macos-desktop
 
 The script targets Arch Linux and requires pacman plus an AUR helper such as yay or paru for Walker, Elephant and providers.
 
-~~~bash
+~~~
 chmod +x install.sh scripts/start-dock
 ./install.sh
 ~~~
@@ -48,33 +48,27 @@ The installer backs up existing files it replaces under ~/.config/niri-macos-des
 
 Common AUR provider packages include:
 
-~~~bash
-yay -S --needed walker elephant elephant-providerlist elephant-desktopapplications elephant-calc elephant-files elephant-runner elephant-websearch
 ~~~
-
-Optional clipboard provider (clipboard history can contain sensitive data):
-
-~~~bash
-yay -S --needed elephant-clipboard
+yay -S --needed walker elephant elephant-providerlist elephant-desktopapplications elephant-calc elephant-files elephant-runner elephant-websearch
 ~~~
 
 Then enable/start the user service:
 
-~~~bash
+~~~
 elephant service enable
 systemctl --user enable --now elephant.service
 ~~~
 
 Check provider and service health:
 
-~~~bash
+~~~
 elephant providers list
 systemctl --user status elephant.service
 ~~~
 
 Start Walker once to generate its default config and theme directory:
 
-~~~bash
+~~~
 walker
 ~~~
 
@@ -82,7 +76,7 @@ walker
 
 Open ~/.config/niri/config.kdl and add this line **inside your existing binds { ... } block**:
 
-~~~kdl
+~~~
 Mod+Space { spawn "walker"; }
 ~~~
 
@@ -90,7 +84,7 @@ Do not create a second binds block blindly and do not replace your complete Niri
 
 Validate with:
 
-~~~bash
+~~~
 niri validate
 ~~~
 
@@ -98,12 +92,26 @@ niri validate
 
 The installer copies files to ~/.config/waybar/. Start/restart it with:
 
-~~~bash
+~~~
 pkill waybar 2>/dev/null || true
 waybar -c "$HOME/.config/waybar/config.jsonc" -s "$HOME/.config/waybar/style.css"
 ~~~
 
 For automatic startup, add spawn-at-startup "waybar" at the top level of your Niri config if Waybar is not already started by your session/autostart setup.
+
+## Clipboard history (optional)
+
+Install the optional provider:
+
+~~~
+yay -S --needed elephant-clipboard
+systemctl --user restart elephant.service
+elephant providers list
+~~~
+
+Open Walker with Super + Space and type `:` followed by a search term to search clipboard history. For a dedicated shortcut, add `Mod+V { spawn "walker"; }` inside your existing Niri `binds { ... }` block; after Walker opens, type `:` and your search term. The shortcut opens Walker but does not automatically enter the prefix.
+
+Clipboard history can capture passwords, API keys, tokens, private messages, and other sensitive data. Review retention and privacy settings for your installed provider version before using it. See [docs/clipboard-history.md](docs/clipboard-history.md) for details and troubleshooting.
 
 ## Chinese input and UI
 
@@ -131,6 +139,7 @@ scripts/start-dock is an optional experiment with nwg-dock. It is not required f
 ## Upstream references
 
 - Walker docs: https://walkerlauncher.com/docs/
+- Walker provider docs: https://walkerlauncher.com/docs/providers
 - Walker source: https://github.com/abenz1267/walker
 - Elephant source: https://github.com/abenz1267/elephant
 - Niri config: https://github.com/niri-wm/niri
